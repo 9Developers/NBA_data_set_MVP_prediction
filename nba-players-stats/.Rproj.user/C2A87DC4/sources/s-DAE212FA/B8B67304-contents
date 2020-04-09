@@ -1,0 +1,33 @@
+##for numerical data
+season_data_numeric<-season_data[,sapply(season_data,is.numeric)]
+sd_rmna<-na.omit(season_data_numeric)
+sapply(sd_rmna,mean)
+
+
+is.na(bank.df$Income)#check true false
+
+mean(bank.df$Income, na.rm = TRUE)#find mean removing NA values
+
+bank.df$Income[is.na(bank.df$Income)]<-mean(bank.df$Income,na.rm=TRUE)#this relace it with a mean.
+
+#now for education missing values those are categorical how to impute
+table(bank.df$Education)#to check the frequency
+#replace NA with highest frequncy value
+bank.df$Education[is.na(bank.df$Education)]<-1 #1 is the highest frequnt value in education
+
+
+# Compute the mean, median, min, max, and standard deviation for each of the numeric variables. Copy the code used and the resulting table below. (Tip: this can be done through R's sapply() function.) 
+NumericCereals<-cereals[,sapply(cereals,is.numeric)]
+#covert data frame in numeric variable only and then omit rows having NA.
+NewCereals<-na.omit(NumericCereals)
+data.frame(mean=sapply(NewCereals,mean),sd=sapply(NewCereals,sd),
+           min=sapply(NewCereals,min),max=sapply(NewCereals,max)
+           ,median=sapply(NewCereals,median))
+
+
+
+
+
+
+
+

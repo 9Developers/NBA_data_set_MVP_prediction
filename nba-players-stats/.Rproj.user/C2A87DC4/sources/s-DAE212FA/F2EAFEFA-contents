@@ -1,0 +1,95 @@
+#Author: Jianqing Chen
+#Title: Week 5 Class Exercise
+#Purpose: Classifcation
+
+
+## Acceptance of Personal Loan: Universal Bank
+
+# use rpart() to run a classification tree ---recursive partition rpart
+# use prp() in rpart.plot to plot tree 
+library(rpart)
+library(rpart.plot)
+
+#install the package in case it has not been done
+install.packages("rpart.plot")
+
+
+#import the data file
+
+bank<-read.csv("UniversalBank.csv")
+# Drop ID and zip code columns
+
+bank<-bank[,-c(1,5)] 
+#-----half data set can be use for validation
+#and half for training
+# partition with random sample
+#use sample command
+?sample#each time u run u get different set
+#to control this we can use set.seed
+?set.seed
+set.seed(1)#it will always start with 1 so will reduce randomness a bit
+train.index<-sample(c(1:5000),5000*0.6)#irrespective of the data set it will choose random number of 5000.
+
+train.index1<-sample(c(1:dim(bank)[1]),dim(bank)[1]*0.6)#here column 1 is used to check the number of observations in bank data set.
+train.df<-bank[train.index,]
+valid.df<-bank[-train.index,]
+# classification tree
+# use rpart() to run a classification tree.
+
+# "~" often used to denote a statistical model, 
+#where the thing on the left of the ~ is the response 
+#and the things on the right of the ~ are the explanatory variables.
+
+?rpart
+#what is method in rpart-method is class as we are using decision tree,for other models it can be anovaor poisson
+#deafault.dt<-rpart(Personal.Loan~Age+Experience+Income)
+
+#use . if use all the function in formula like columns.
+deafault.dt<-rpart(Personal.Loan~.,data=train.df,method = "class")
+
+# plot tree
+# use prp() to plot the tree. You can control plotting parameters such as color, shape, 
+# and information displayed (which and where).
+
+prp(deafault.dt)#if 0 at top of tree means majority are no or zero to get more insights we use extra how many 1 or Yes n 0.
+prp(deafault.dt,type = 1,extra = 1)
+prp(deafault.dt,type = 1,extra = 1,under = TRUE,varlen=-10)
+
+prp(deafault.dt,type = 1,extra = 1,fallen.leaves = TRUE,yesno = 2,branch = 0,uniform = TRUE,tweak = 1.2)
+# customized tree
+# define rpart.control() in rpart() to determine the depth of the tree.
+custom.dt<-rpart(Personal.Loan~.,data=train.df,method = "class",control = rpart.control(maxdepth = 2))
+#use control to customize rpart
+#ucan go with the below method also
+custom.dt<-rpart(Personal.Loan~.,data=train.df,method = "class",maxdepth = 2)
+
+prp(custom.dt,type = 1,extra = 1)#same depth as said in maxdepth
+
+#maximum tree
+
+deeper.dt<-rpart(Personal.Loan~.,data=train.df,method = "class",minsplit=1,cp=0)
+prp(deeper.dt,box.col = "blue")
+#Or use if else for color
+prp(deeper.dt,box.col = ifelse(deeper.dt$frame$var == "<leaf>","yellow","Red"))
+#just to change the color of columns based on leaf or whaever the name of that from in var.check DAtaset for frame and inside it var values.
+
+#cp means if the information gain is below 1% then stop by default is cp=0.01
+
+# plot tree
+
+
+# run logistic regression
+# use glm() (general linear model) with family = "binomial" to fit a logistic 
+# regression.
+logic.reg<-glm(Personal.Loan ~ .,data =train.df ,family = "binomial")
+options(scipen=999)#to change the values in summary from 1+e types
+summary(logic.reg)
+#we have to tell that education is not interval data but a categorical data.
+
+bank$Education<-factor(bank$Education,levels = c(1,2,3),labels =c("undergrad","grad","professional"))
+#it will create dummy variables 
+#after this we can see a change in value of education to educationGrad,educationprofessional
+#we get the dummy variables now
+#this is odds ratio
+
+#run train.df again and then the above logic.reg command again with summary.Ucan then see the change.

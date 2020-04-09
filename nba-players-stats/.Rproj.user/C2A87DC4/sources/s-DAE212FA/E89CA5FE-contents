@@ -1,0 +1,96 @@
+#Author: Jianqing Chen
+#Title: Week 3 Class Exercise
+#Purpose: Dimension Reduction
+
+
+
+#### Summary Table on page 10
+# compute mean, standard dev., min, max, median, length, and missing values of CRIM
+cereals <- read.csv("Cereals.csv")
+mean(cereals$rating)
+min(cereals$rating)
+length(cereals$rating)
+
+
+# find the number of missing values of variable CRIM
+is.na(cereals$potass)
+sum(is.na(cereals$potass))#sum of zero and one
+summary(cereals$potass)#to find missing values
+
+
+# compute mean, standard dev., min, max, median, length, and missing values for all
+sapply(cereals,mean)
+data.frame(mean=sapply(housing,mean),sd=sapply(housing,sd),
+           min=sapply(housing,min),max=sapply(housing,max)
+           ,miss=sapply(housing,function(x)sum(is.na(x))))#to create and call func in last miss func
+# variables
+
+
+
+
+#### Correlation Table on page 11
+
+cor(housing)
+round(cor(housing),1)
+
+#### using "table" on page 12
+table(housing$CHAS)
+table(housing$CHAS,housing$CRIM)
+
+
+
+#### using "aggregate"
+# create bins of size 1
+housing$RM.bin<-.bincode(housing$RM,c(1:9))
+
+
+
+# compute the average of MEDV by (binned) RM and CHAS
+# in aggregate() use the argument by= to define the list of aggregating variables, 
+# and FUN= as an aggregating function.
+
+aggregate(housing$MEDV,by=list(RM=housing$RM.bin,CHAS=housing$CHAS),FUN=mean)#very important function compare 2 variables and show average 
+
+
+
+
+
+
+#### PCA
+# compute PCs on two dimensions--can be applied to numerical columns only
+
+pcs<-prcomp(data.frame(cereals$calories,cereals$rating)) #creating combination of two variable to make a new useful variable
+summary(pcs)
+pcs$rotation
+pcs$x
+pcs1<-prcomp(na.omit(cereals[,-c(1:3)]))
+na.omit#omit the missing values from each row
+summary(pcs1)
+
+pcs1$rotation
+pcs1$x
+
+# compute PCs on two dimensions
+cereals<-read.csv("Cereals.csv")
+
+pcs<-prcomp(data.frame(cereals$rating,cereals$calories))#two columns in data frame type now
+summary(pcs)#gives you proportion of variance how much variance it covers
+pcs$rotation # this basically gives you correlation
+#pc1 says calculate values of using correltion and variance and all and these are new reduced dimensions.
+head(pcs$x,3)
+mean(cereals$rating)
+pcs$x#new reduced data
+#### PCA for the 13 numerical variables
+#pc1 is linear relation of all the columns
+#pcs1 is already done above
+
+pcs1$x
+summary(pcs1)
+pcs$rotation
+pcs1$rotation #this gives you the coefficiaent we need to calculate pc
+
+#### PCA with normalization to make variables comparable like sodium with rating which have different Units
+pcs<-prcomp(na.omit(cereals[,-c(1:3)]),scale. = T)
+pcs2<-prcomp(data.frame(na.omit(cereals[,-c(1:3)]),scale. = T))
+
+

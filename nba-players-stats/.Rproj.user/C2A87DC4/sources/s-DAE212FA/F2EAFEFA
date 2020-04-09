@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1586383042574.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2464245769",
+    "id" : "F2EAFEFA",
+    "lastKnownWriteTime" : 1581457371,
+    "last_content_update" : 1581457371,
+    "path" : "~/JSOM MAterial/BAwithR/R-Week5_Students.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

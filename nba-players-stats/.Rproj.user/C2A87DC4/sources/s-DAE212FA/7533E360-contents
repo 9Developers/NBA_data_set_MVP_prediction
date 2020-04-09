@@ -1,0 +1,111 @@
+#HomeWork by Abhishek Rai for BA with R class.
+#assumptions
+#shelf and rating is a numerical data not a categorical data
+
+#question 1
+#Import the data to R. Copy the R code used below
+
+
+#to import data we need to check directory first
+getwd()
+cereals <- read.csv("Cereals.csv")
+summary(cereals)
+
+#question 2
+#Which variables are numerical? Which variables are categorical? 
+#we have done summary in above step which helps in understanding of each variable that is column in our case.
+# mfr name type and shelf are categorical variables 
+#calories protein fat sodium fiber carbo sugars potass vitamins  weight cups ratings are numerical variables
+
+
+# Compute the mean, median, min, max, and standard deviation for each of the numeric variables. Copy the code used and the resulting table below. (Tip: this can be done through R's sapply() function.) 
+NumericCereals<-cereals[,sapply(cereals,is.numeric)]
+#covert data frame in numeric variable only and then omit rows having NA.
+NewCereals<-na.omit(NumericCereals)
+data.frame(mean=sapply(NewCereals,mean),sd=sapply(NewCereals,sd),
+           min=sapply(NewCereals,min),max=sapply(NewCereals,max)
+           ,median=sapply(NewCereals,median))
+# 
+# Plot a histogram for each of the numeric variable. 
+# Copy the code used and the generated charts below.
+# Based on the histograms and summary statistics, 
+# which variables have the largest variability? Which variables seem skewed?
+
+hist(NewCereals$calories,col = "BLUE",xlab = "Calories value",main = "Histogram - Calories")
+
+hist(NewCereals$protein,col = "Red",xlab = "Protein value",main = "Histogram - Protein")
+
+hist(NewCereals$fat,col = "Yellow",xlab = "fat value",main = "Histogram -FAT" )
+
+hist(NewCereals$sodium,col = "BLUE",xlab = "sodium value",main = "Histogram - Sodium")
+hist(NewCereals$fiber,col = "Red",xlab = "Fiber value",main = "Histogram -Fiber" )
+hist(NewCereals$carbo,col = "Grey",xlab = "Carbo value",main = "Histogram -Carbo" )
+hist(NewCereals$sugars,col = "Green",xlab = "Sugar value",main = "Histogram -Sugar" )
+hist(NewCereals$potass,col = "Orange",xlab = "potass value",main = "Histogram - Potass")
+hist(NewCereals$vitamins,col = "BLUE",xlab = "vitamins value",main = "Histogram -Vitamins" )
+hist(NewCereals$shelf,col = "Green",xlab = "Shelf value",main = "Histogram - Shelf")
+hist(NewCereals$weight,col = "Yellow",xlab = "Weight value",main = "Histogram -Weight ")
+hist(NewCereals$cups,col = "Red",xlab = "Cups value",main = "Histogram - Cups")
+hist(NewCereals$rating,col = "BLUE",xlab = "rating value",main = "Histogram - Rating")
+
+summary(NewCereals)
+
+# Plot a side-by-side boxplot comparing the calories 
+# in hot vs. cold cereals. Copy thecode used and the generated chart below.
+# What does this plot show us? 
+
+
+boxplot(cereals$calories~cereals$type,names=c("Cold Cereals","Hot Cereals"),xlab = "hot or Cold Cereals",ylab = "value of Calories",col="orange")
+
+# Plot a side-by-side boxplot of consumer rating as a function of the shelf 
+# height. Copy the code used and the generated chart below. 
+# If we were to predict consumer rating from shelf height,
+# does it appear that we need to keep all three categories of shelf height? Why? 
+
+boxplot(cereals$rating~cereals$shelf,names=c("1","2","3"),xlab = "Shelf Height",ylab = "Rating",col="Green")
+
+# Compute the correlation table for the numeric variables (function cor()).
+# In addition, generate a matrix plot for these variables (function plot(data)). 
+# Copy the code used and the results below.
+# Which pair of variables is most strongly correlated?
+# How can we reduce the number of variables based on these correlations?
+# How would the correlations change if we normalized the data first? 
+  
+
+round(cor(NewCereals),2)
+plot(NewCereals)
+plot(NewCereals[,c(5,8)])
+install.packages("GGally")
+ggcorr(NewCereals)
+
+#we can use Principal Component facotr analysis to reuse this correlation to reduce the number of variables.
+
+#normalization of data
+#using Scale to normalize the data
+NewCereals_Scaled<-as.data.frame(scale(NewCereals))
+cor(NewCereals_Scaled)
+ggcorr(NewCereals_Scaled)
+
+#normalization doesnt affect correlation analysis although it affects the PC analysis
+#because PC analysis is all about maximizing the varience.
+
+# As that on page 25 of class slides used for Week 3, conduct PCA (without normalization) and get the summary.
+# Copy the code used and the results below.
+# Consider the first PC of the analysis.
+# Describe briefly what this PC represent.
+# Furthermore, what is the score of this PC for the first record? 
+# Also, show us how you can manually derive this value. 
+
+#PCA
+pca<-prcomp(data.frame(NewCereals))
+summary(pca)
+
+#PC1 represent the 53% of the total variance meaning nearly half of the 
+#values in data set can be encapsulated by PC1.
+
+str(pca)
+pca$x
+#score of PC1 for the first record is -61.652948.
+#to manually calculate we need rotation value
+pca$rotation
+summary(NewCereals)

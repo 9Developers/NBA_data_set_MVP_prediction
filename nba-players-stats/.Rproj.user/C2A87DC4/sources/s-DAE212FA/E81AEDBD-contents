@@ -1,0 +1,40 @@
+#Author: Jianqing Chen
+#Title: Week 7 Class Exercise
+#Purpose: More about Classifcation (change data type, odds ratio)
+
+
+## Acceptance of Personal Loan: Universal Bank
+
+#import the data file "UniversalBank_Problems.csv"
+
+bank.df <- read.csv("UniversalBank.csv")
+
+
+# Drop ID and zip code columns
+
+bank.df <- bank.df[ , -c(1, 5)]  
+
+
+# treat Education as categorical (R will create dummy variables)
+
+bank.df$Education <- as.factor(bank.df$Education)
+bank.df$Education <- factor(bank.df$Education, levels = c(1,2,3), labels = c("Undergrad", "Graduate", "Advanced/Professional"))
+
+
+# run logistic regression
+# use glm() (general linear model) with family = "binomial" to fit a logistic 
+# regression.
+
+logit.reg <- glm(Personal.Loan ~ ., data = bank.df, family = "binomial") 
+options(scipen=999)
+a<-summary(logit.reg)
+
+
+# generate odds ratio
+#estimate in summary is beta value used for odds ratio
+coef(logit.reg)
+exp(coef(logit.reg))#this is odds ratio
+
+
+#now to create a visual representation of table
+round(data.frame(summary(logit.reg)$coefficient,odd.ratio=exp(coef(logit.reg))),5)

@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1586382922486.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2238836997",
+    "id" : "D956B4D5",
+    "lastKnownWriteTime" : 1586454804,
+    "last_content_update" : 1586454804018,
+    "path" : "~/JSOM MAterial/BAwithR/Project/nba-players-stats/Project_code.R",
+    "project_path" : "Project_code.R",
+    "properties" : {
+        "cursorPosition" : "196,21",
+        "docOutlineVisible" : "0",
+        "scrollLine" : "184",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
