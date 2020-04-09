@@ -196,15 +196,6 @@ table(prediction)
 
 ####working till here
 ##############
-# salary_prediction <- function(m, point, minutes, turn_over){
-#   pre_new <- predict(m, data.frame(PPG = point, MPG = minutes, TOPG = turn_over))
-#   msg <- paste("PPG:", point, ",MPG:", minutes, ",TOPG:", turn_over, " ==> Expected Salary: $", format(round(pre_new), big.mark = ","), sep = "")
-#   print(msg)
-# }
-# 
-# model <- lm(formula = salary17_18 ~ PPG + MPG + TOPG, data = stats_salary_regression)
-# # Prediction on Salary of J.J. Redick
-# salary_prediction(model,18.3,30,1.4)
 ######################
 ########trying to print the prediction based on var
 summary(df.set)
