@@ -247,32 +247,32 @@ validation.dataset<-df.set[-tran.index,]#
 library(rpart)
 library(rpart.plot)
 library(caret)
-##decision tree
-defalut.ct <- rpart(MVP ~ ., data = train.dataset, method = "class")
-prp(defalut.ct)
-
-default.ct.pred.train <- predict(default.ct,train.dataset,type = "class")
-confusionMatrix(default.ct.pred.train,as.factor(train.dataset$MVP))
-
-# custome tree
-cust.ct <- rpart(MVP ~ ., data = train.dataset, method = "class", maxdepth = 3)
-prp(cust.ct)
-
-cust.ct.pred.train<-predict(cust.ct,train.dataset,type = "class")
-confusionMatrix(cust.ct.pred.train,as.factor(train.dataset$MVP)) ##accuracy = 99.7%
-
-cust.ct.pred.valid<-predict(cust.ct,validation.dataset,type = "class")
-confusionMatrix(cust.ct.pred.valid,as.factor(validation.dataset$MVP)) ## accuracy = 99.6%
-
-#deeper tree (redudant rule) model
-deeper.ct <- rpart(MVP ~ ., data = train.dataset, method = "class", minsplit = 1, cp = 0)
-prp(deeper.ct)
-
-deeper.ct.pred.train<-predict(deeper.ct,train.dataset,type = "class")
-confusionMatrix(deeper.ct.pred.train,as.factor(train.dataset$MVP)) ##accuracy = 1 (sure thing!)
-
-deeper.ct.pred.valid<-predict(deeper.ct,validation.dataset,type = "class")
-confusionMatrix(deeper.ct.pred.valid,as.factor(validation.dataset$MVP)) ## accuracy = 99.7% (good but too complex rules)
+# ##decision tree
+# defalut.ct <- rpart(MVP ~ ., data = train.dataset, method = "class")
+# prp(defalut.ct)
+# 
+# default.ct.pred.train <- predict(default.ct,train.dataset,type = "class")
+# confusionMatrix(default.ct.pred.train,as.factor(train.dataset$MVP))
+# 
+# # custome tree
+# cust.ct <- rpart(MVP ~ ., data = train.dataset, method = "class", maxdepth = 3)
+# prp(cust.ct)
+# 
+# cust.ct.pred.train<-predict(cust.ct,train.dataset,type = "class")
+# confusionMatrix(cust.ct.pred.train,as.factor(train.dataset$MVP)) ##accuracy = 99.7%
+# 
+# cust.ct.pred.valid<-predict(cust.ct,validation.dataset,type = "class")
+# confusionMatrix(cust.ct.pred.valid,as.factor(validation.dataset$MVP)) ## accuracy = 99.6%
+# 
+# #deeper tree (redudant rule) model
+# deeper.ct <- rpart(MVP ~ ., data = train.dataset, method = "class", minsplit = 1, cp = 0)
+# prp(deeper.ct)
+# 
+# deeper.ct.pred.train<-predict(deeper.ct,train.dataset,type = "class")
+# confusionMatrix(deeper.ct.pred.train,as.factor(train.dataset$MVP)) ##accuracy = 1 (sure thing!)
+# 
+# deeper.ct.pred.valid<-predict(deeper.ct,validation.dataset,type = "class")
+# confusionMatrix(deeper.ct.pred.valid,as.factor(validation.dataset$MVP)) ## accuracy = 99.7% (good but too complex rules)
 
 #logit model 
 ####convert MVP result "yes" to "1" and "no" to "0"
