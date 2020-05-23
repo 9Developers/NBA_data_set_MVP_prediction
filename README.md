@@ -1,7 +1,11 @@
 Data Mining and Machine leanring (Model prediction) with R using Historical Data Set.
 # NBA_MVP player prediction model
 
-This is project where we are using the NBA data set from Kaggle which is a historical data set consisting of all the information about the NBA player performances since 1950's.
+This is project where we are using the NBA data set from Kaggle which is a historical data set consisting of all the information about the NBA player performances since 1950's.We are using Random Forest model here in this project.
+
+Data sets created from (links):
+https://www.kaggle.com/drgilermo/nba-players-stats  
+http://www.espn.com/nba/history/awards/_/id/33
 
 This Project aims at taking advantage of second-hand National Basketball Association (NBA) historical datasets and using different data mining techniques to measure the performance of a player in a single year and trying to create a useful model to predict whether that player could win the most valuable player (MVP) award.
 
